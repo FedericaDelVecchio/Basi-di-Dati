@@ -1,0 +1,7 @@
+CREATE OR REPLACE TRIGGER inserimento_regioni
+AFTER INSERT 
+ON COVID
+FOR EACH ROW
+BEGIN
+INSERT INTO REGIONI (stato, codice_regione, denominazione_regione) VALUES (:new.stato, :new.codice_regione, :new.denominazione_regione);
+END;

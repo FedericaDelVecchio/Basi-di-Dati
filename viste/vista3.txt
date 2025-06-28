@@ -1,0 +1,4 @@
+CREATE MATERIALIZED VIEW Trentino_Alto_Adige AS
+SELECT SUM(P.numero_abitanti) AS Numero_abitanti_TAA, SUM(P.numero_comuni) AS Numero_comuni_TAA, SUM(P.superficie) AS Superficie_TAA, AVG(P.densita) AS Densita_TAA, SUM(P.numero_scuole) AS Numero_scuole_TAA, SUM(P.numero_ospedali) AS Numero_ospedali_TAA, SUM(R.posti_letto_terapia_intensiva) AS Posti_letto_TAA, SUM(R.numero_aereoporti) AS Numero_aeroporti_TAA, SUM(R.numero_stazioni) AS Numero_stazioni_TAA, SUM(R.numero_autostrade) AS Numero_autostrade_TAA, SUM(R.numero_strade_statali) AS Numero_strade_statali_TAA
+FROM PROVINCE P JOIN REGIONI R ON R.codice_regione=P.codice_regione
+WHERE R.codice_regione=99 OR R.codice_regione=98;

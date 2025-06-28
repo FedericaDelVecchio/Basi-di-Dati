@@ -1,0 +1,6 @@
+SELECT C.codice_regione, R.denominazione_regione, C.deceduti
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE C.data='03-Mag-2020' AND C.deceduti =(
+SELECT MIN(C1.deceduti)
+FROM COVID_REGIONI C1
+WHERE C1.data=C.data);

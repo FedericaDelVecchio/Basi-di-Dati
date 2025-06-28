@@ -1,0 +1,5 @@
+SELECT C.codice_regione, R.denominazione_regione, AVG(C.dimessi_guariti) AS Media_dimessi
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE data>='1-Apr-2020' AND data<='30-Apr-2020' AND 
+(R.denominazione_regione= 'Lazio' OR R.denominazione_regione= 'Marche' OR R.denominazione_regione= 'Toscana' OR R.denominazione_regione= 'Umbria')
+GROUP BY C.codice_regione, R.denominazione_regione;

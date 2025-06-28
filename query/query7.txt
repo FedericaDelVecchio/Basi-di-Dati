@@ -1,0 +1,8 @@
+SELECT C1.data, C1.codice_provincia AS Codice_Provincia_con_picco, P.denominazione_provincia AS Provincia_con_picco, C1.totale_casi AS Picco_di_casi_totali
+FROM COVID_PROVINCE C1 JOIN PROVINCE P ON C1.codice_provincia= P.codice_provincia
+WHERE C1.totale_casi= (
+SELECT MAX(C2.totale_casi) 
+FROM COVID_PROVINCE C2 
+WHERE C2.data=C1.data 
+GROUP BY C2.data)
+ORDER BY C1.data;

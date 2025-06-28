@@ -1,0 +1,27 @@
+CREATE OR REPLACE PROCEDURE conta_contagiati_per_regione
+(regione IN REGIONI.denominazione_regione%TYPE,
+ giorno IN COVID_REGIONI.data%TYPE
+)
+AS
+BEGIN
+DECLARE
+persone_contagiate COVID_REGIONI.nuovi_positivi%TYPE;
+cod_reg COVID_REGIONI.codice_regione%TYPE; 
+cont INTEGER;
+regione_errata EXCEPTION;
+BEGIN
+SELECT DISTINCT COVID_REGIONI.codice_regione into cod_reg 
+FROM COVID_REGIONI JOIN REGIONI ON COVID_REGIONI.codice_regione = REGIONI.codice_regione
+WHERE REGIONI.denominazione_regione=regione;
+SELECT COUNT (*) into cont FROM COVID_REGIONI WHERE codice_regione=cod_reg;
+if (cont=0) then raise regione_errata;
+else
+SELECT SUM (nuovi_positivi) AS numero_contagiati into persone_contagiate 
+FROM COVID_REGIONI WHERE codice_regione=cod_reg AND data<=giorno 
+GROUP BY codice_regione;
+DBMS_OUTPUT.PUT_LINE ('Numero di contagiati in ' || regione || ' fino al giorno ' || giorno || ': ' || persone_contagiate);
+end if;
+EXCEPTION 
+when regione_errata then DBMS_OUTPUT.PUT_LINE ('La regione selezionata non esiste.');
+END;
+END;

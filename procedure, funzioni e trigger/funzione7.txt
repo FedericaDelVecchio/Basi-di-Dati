@@ -1,0 +1,27 @@
+CREATE OR REPLACE FUNCTION minor_num_isolamento
+(giorno IN COVID_REGIONI.data%TYPE
+) RETURN VARCHAR2
+IS
+BEGIN
+DECLARE
+isolamento COVID_REGIONI.isolamento_domiciliare%TYPE; 
+cod_reg COVID_REGIONI.codice_regione%TYPE;
+min_isolamento COVID_REGIONI.isolamento_domiciliare%TYPE :=60360000;
+min_cod_reg COVID_REGIONI.codice_regione%TYPE; 
+regione REGIONI.denominazione_regione%TYPE;
+CURSOR cursore IS SELECT codice_regione, isolamento_domiciliare 
+FROM COVID_REGIONI WHERE data=giorno; 
+BEGIN 
+OPEN cursore;
+LOOP
+FETCH cursore into cod_reg, isolamento;
+if isolamento < min_isolamento then 
+min_cod_reg := cod_reg; min_isolamento:=isolamento;
+end if;
+EXIT WHEN cursore%NOTFOUND;
+END LOOP;
+CLOSE cursore;
+SELECT denominazione_regione INTO regione FROM REGIONI WHERE codice_regione=min_cod_reg;
+RETURN regione;
+END;
+END;

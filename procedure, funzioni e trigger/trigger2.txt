@@ -1,0 +1,7 @@
+CREATE OR REPLACE TRIGGER inserimento_province
+AFTER INSERT 
+ON COVID
+FOR EACH ROW
+BEGIN
+INSERT INTO PROVINCE (codice_provincia, denominazione_provincia, sigla_provincia, latitudine, longitudine) VALUES (:new.codice_provincia, :new.denominazione_provincia, :new.sigla_provincia, :new.latitudine, :new.longitudine);
+END;

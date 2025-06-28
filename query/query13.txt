@@ -1,0 +1,6 @@
+SELECT C.codice_regione, R.denominazione_regione
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE C.tamponi >= ALL(
+SELECT MAX(C1.tamponi)
+FROM COVID_REGIONI C1
+GROUP BY C1.codice_regione);

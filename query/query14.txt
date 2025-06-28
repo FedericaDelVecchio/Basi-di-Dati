@@ -1,0 +1,3 @@
+SELECT R.codice_regione, R.denominazione_regione, (10000*R.posti_letto_terapia_intensiva/R.numero_abitanti) AS Posti_letto_terapia_intensiva
+FROM REGIONI R
+ORDER BY R.codice_regione;

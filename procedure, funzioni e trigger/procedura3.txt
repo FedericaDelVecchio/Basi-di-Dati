@@ -1,0 +1,21 @@
+CREATE OR REPLACE PROCEDURE posti_letto_allarme
+(giorno IN COVID_REGIONI.data%TYPE,
+ regione IN REGIONI.denominazione_regione%TYPE
+)
+AS
+BEGIN 
+DECLARE  
+max_posti_letto REGIONI.posti_letto_terapia_intensiva%TYPE; 
+persone_terapia_int COVID_REGIONI.terapia_intensiva%TYPE; 
+cod_reg REGIONI.codice_regione%TYPE; 
+BEGIN 
+SELECT codice_regione into cod_reg 
+FROM REGIONI WHERE denominazione_regione=regione;
+SELECT terapia_intensiva into persone_terapia_int FROM COVID_REGIONI 
+WHERE data=giorno AND codice_regione=cod_reg; 
+SELECT posti_letto_terapia_intensiva into max_posti_letto FROM REGIONI 
+WHERE codice_regione=cod_reg; 
+if max_posti_letto<persone_terapia_int then DBMS_OUTPUT.PUT_LINE('Attenzione!'); 
+end if;
+END; 
+END;

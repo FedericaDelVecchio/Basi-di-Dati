@@ -1,0 +1,21 @@
+CREATE OR REPLACE PROCEDURE meno_di_tremila
+(giorno IN COVID_REGIONI.data%TYPE
+)
+AS
+BEGIN
+DECLARE
+numero_contagiati COVID_REGIONI.totale_positivi%TYPE;
+regione REGIONI.denominazione_regione%TYPE;
+cont integer;
+CURSOR cr IS SELECT R.denominazione_regione, C.totale_positivi 
+FROM COVID_REGIONI C JOIN REGIONI R ON R.codice_regione=C.codice_regione WHERE C.data=giorno AND C.totale_Positivi<3000;
+BEGIN
+OPEN cr;
+LOOP
+FETCH cr into regione, numero_contagiati;
+EXIT WHEN cr%NOTFOUND;
+DBMS_OUTPUT.PUT_LINE ('Regione di ' || REGIONE || ', numero di contagiati: ' || numero_contagiati);
+END LOOP;
+CLOSE cr;
+END;
+END;

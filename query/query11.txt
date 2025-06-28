@@ -1,0 +1,5 @@
+SELECT R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_autostrade, (R.numero_autostrade+R.numero_strade_statali) AS Numero_strade, SUM(C.nuovi_positivi) AS Persone_ammalatesi_a_Marzo
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE data BETWEEN '1-Mar-2020' AND '31-Mar-2020' AND R.numero_aereoporti>=2 AND R.numero_autostrade>=1 AND (R.numero_autostrade + R.numero_strade_statali)>=30
+GROUP BY R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_stazioni, R.numero_autostrade, R.numero_strade_statali
+ORDER BY R.codice_regione;

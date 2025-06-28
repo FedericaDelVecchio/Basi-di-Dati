@@ -1,0 +1,4 @@
+SELECT R.denominazione_regione, C.*
+FROM COVID_REGIONI C JOIN REGIONI R ON R.codice_regione=C.codice_regione
+WHERE R.densita=(SELECT MAX(R1.densita) FROM REGIONI R1) AND C.data between '26-Feb-2020' AND '15-Mar-2020'
+ORDER BY C.data;

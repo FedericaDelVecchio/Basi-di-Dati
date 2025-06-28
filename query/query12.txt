@@ -1,0 +1,4 @@
+SELECT R.codice_regione, R.denominazione_regione, C.data, R.posti_letto_terapia_intensiva, C.terapia_intensiva AS Persone_in_terapia_intensiva
+FROM REGIONI R, COVID_REGIONI C
+WHERE R.codice_regione=C.codice_regione AND (R.posti_letto_terapia_intensiva)>= (C.terapia_intensiva) AND C.data>=’01-Apr-2020’
+ORDER BY C.data,R.codice_regione;

@@ -1,0 +1,22 @@
+CREATE OR REPLACE PROCEDURE prov
+(provincia IN PROVINCE.denominazione_provincia%TYPE
+)
+AS
+BEGIN
+DECLARE
+cod_prov PROVINCE.codice_provincia%TYPE; 
+sigla_prov PROVINCE.sigla_provincia%TYPE; 
+cod_reg REGIONI.codice_regione%TYPE;
+regione REGIONI.denominazione_regione%TYPE;
+trentino_alto_adige EXCEPTION;
+BEGIN
+SELECT PROVINCE.sigla_provincia, PROVINCE.codice_provincia, REGIONI.codice_regione, REGIONI.denominazione_regione into sigla_prov, cod_prov, cod_reg, regione 
+FROM REGIONI JOIN PROVINCE ON REGIONI.codice_regione=PROVINCE.codice_regione AND PROVINCE.denominazione_provincia=provincia;
+if (cod_reg=98 OR cod_reg=99) then raise trentino_alto_adige;
+else
+DBMS_OUTPUT.PUT_LINE ('Nome della provincia: ' || provincia || '. Sigla della provincia: ' || sigla_prov || '. Codice della provincia: ' || cod_prov || '. Nome della regione: ' || regione || '. Codice della regione: ' || cod_reg || '.');
+end if;
+EXCEPTION 
+when trentino_alto_adige then DBMS_OUTPUT.PUT_LINE ('Nome della provincia: ' || provincia || '. Sigla della provincia: ' || sigla_prov || '. Codice della provincia: ' || cod_prov || '. La provincia non fa parte di alcuna regione.' );
+END;
+END;

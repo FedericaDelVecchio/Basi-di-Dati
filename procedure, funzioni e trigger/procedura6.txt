@@ -1,0 +1,29 @@
+CREATE OR REPLACE PROCEDURE differenza_tot_casi
+(provincia IN PROVINCE.denominazione_provincia%TYPE,
+ giorno_oggi IN COVID_PROVINCE.data%TYPE
+)
+AS
+BEGIN
+DECLARE
+cod_prov COVID_PROVINCE.codice_provincia%TYPE;
+differenza COVID_PROVINCE.totale_casi%TYPE;
+tot_casi_oggi COVID_PROVINCE.totale_casi%TYPE;
+tot_casi_ieri COVID_PROVINCE.totale_casi%TYPE;
+giorno_ieri COVID_REGIONI.data%TYPE;
+eccezione EXCEPTION;
+BEGIN 
+SELECT codice_provincia into cod_prov FROM PROVINCE WHERE denominazione_provincia=provincia;
+SELECT DISTINCT data-1 into giorno_ieri FROM COVID_PROVINCE WHERE data=giorno_oggi;
+SELECT totale_casi into tot_casi_oggi FROM COVID_PROVINCE WHERE data=giorno_oggi AND codice_provincia=cod_prov;
+SELECT totale_casi into tot_casi_ieri FROM COVID_PROVINCE WHERE data=giorno_ieri AND codice_provincia=cod_prov;
+differenza := tot_casi_oggi - tot_casi_ieri; 
+if differenza <0 then raise eccezione;
+else
+DBMS_OUTPUT.PUT_LINE ('Totale dei casi nella provincia ' || provincia || ' nel giorno ' || giorno_ieri || ' = ' || tot_casi_ieri); 
+DBMS_OUTPUT.PUT_LINE ('Totale dei casi nella provincia ' || provincia || ' nel giorno ' || giorno_oggi || ' = ' || tot_casi_oggi); 
+DBMS_OUTPUT.PUT_LINE ('Differenza : ' || differenza);
+end if;
+EXCEPTION
+when eccezione then DBMS_OUTPUT.PUT_LINE ('Attenzione! Vi è stato un errore nell''inserimento dei dati');
+END;
+END;

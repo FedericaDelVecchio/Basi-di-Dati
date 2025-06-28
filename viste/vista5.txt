@@ -1,0 +1,6 @@
+CREATE VIEW COVID_NORD AS
+SELECT data AS Data, SUM(ricoverati_con_sintomi) AS Ricoverati_sintomi_nord, SUM(terapia_intensiva) AS Terapia_intensiva_nord, SUM(totale_ospedalizzati) AS Totale_ospedal_nord, SUM(isolamento_domiciliare) AS Isolamento_domicil_nord, SUM(variazione_totale_positivi) AS Variazione_tot_pos_nord, SUM(totale_positivi) AS Totale_positivi_nord, SUM(casi_totali) AS Casi_totali_nord, SUM(nuovi_positivi) AS Nuovi_positivi_nord, SUM(dimessi_guariti) AS Dimessi_guariti_nord, SUM(deceduti) AS Deceduti_nord, SUM(tamponi) AS Tamponi_nord, SUM(casi_testati) AS Casi_testati_nord
+FROM COVID_REGIONI 
+WHERE codice_regione=8 OR codice_regione=6 OR codice_regione=7 OR codice_regione=3 OR codice_regione=1 OR codice_regione=99 OR codice_regione=98 OR codice_regione=2 OR codice_regione=5
+GROUP BY data
+ORDER BY data;

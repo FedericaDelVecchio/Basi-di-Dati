@@ -1,0 +1,5 @@
+SELECT C.codice_regione, R.denominazione_regione, COUNT(C.data) AS Risultato_query
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE (C.nuovi_positivi)<=50
+GROUP BY C.codice_regione, R.denominazione_regione
+ORDER BY codice_regione;

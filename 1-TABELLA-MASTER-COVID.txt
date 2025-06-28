@@ -1,0 +1,17 @@
+--creazione Tabella master COVID
+CREATE TABLE COVID( 
+data DATE, 
+stato CHAR(3), 
+codice_regione NUMBER(2), 
+denominazione_regione VARCHAR2(200), 
+codice_provincia NUMBER(3) NOT NULL,     
+denominazione_provincia VARCHAR2(200), 
+sigla_provincia CHAR(2), 
+latitudine NUMBER, 
+longitudine NUMBER,               
+totale_casi INTEGER, 
+note_it CLOB,          
+note_en CLOB, 
+CONSTRAINT PK_COVID PRIMARY KEY(data,codice_provincia) 
+);
+COMMIT;

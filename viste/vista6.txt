@@ -1,0 +1,7 @@
+CREATE MATERIALIZED VIEW CAPOLUOGHI AS
+SELECT R.denominazione_regione, P1.*
+FROM PROVINCE P1 JOIN REGIONI R ON R.codice_regione=P.codice_regione
+WHERE P1.denominazione_provincia IN (
+SELECT P.denominazione_provincia FROM PROVINCE P WHERE P.denominazione_provincia='Aosta' OR P.denominazione_provincia='Torino' OR P.denominazione_provincia='Genova' OR P.denominazione_provincia='Milano' OR 
+P.denominazione_provincia='Trento' OR P.denominazione_provincia='Bolzano' OR P.denominazione_provincia='Venezia' OR P.denominazione_provincia='Trieste' OR P.denominazione_provincia='Bologna' OR P.denominazione_provincia='Firenze' OR P.denominazione_provincia='Perugia' OR P.denominazione_provincia='Ancona' OR P.denominazione_provincia='Roma' OR P.denominazione_provincia='L’Aquila' OR P.denominazione_provincia='Campobasso' OR P.denominazione_provincia='Napoli' OR P.denominazione_provincia='Bari' OR P.denominazione_provincia='Potenza' OR P.denominazione_provincia='Catanzaro' OR P.denominazione_provincia='Palermo' OR P.denominazione_provincia='Cagliari')
+ORDER BY P1.codice_provincia;

@@ -1,0 +1,4 @@
+SELECT R.codice_regione, R.denominazione_regione, C.data, C.nuovi_positivi
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione 
+WHERE nuovi_positivi=0 AND nuovi_positivi IS NOT NULL AND data>='15-Apr -2020'
+ORDER BY R.codice_regione, R.denominazione_regione;

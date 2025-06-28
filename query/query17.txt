@@ -1,0 +1,4 @@
+SELECT R.codice_regione, R.denominazione_regione, (C.casi_totali*100)/(C.tamponi) AS Percentuale_tamponi_usciti_pos
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE C.data='05-Apr-2020'
+ORDER BY R.codice_regione, R.denominazione_regione;

@@ -1,0 +1,4 @@
+CREATE MATERIALIZED VIEW ITALIA AS
+SELECT SUM(P.numero_abitanti) AS Numero_abitanti_it, SUM(P.numero_comuni) AS Numero_comuni_it, SUM(P.superficie) AS Superficie_it, AVG(P.densita) AS Densita_it, SUM(P.numero_scuole) AS Numero_scuole_it, SUM(P.numero_ospedali) AS Numero_ospedali_it, SUM(R.posti_letto_terapia_intensiva) AS Posti_letto_it, SUM(R.numero_aereoporti) AS Numero_aeroporti_it, SUM(R.numero_stazioni) AS Numero_stazioni_it, SUM(R.numero_autostrade) AS Numero_autostrade_it, SUM(R.numero_strade_statali) AS Numero_strade_statali_it
+FROM PROVINCE P, REGIONI R
+WHERE R.codice_regione=P.codice_regione;

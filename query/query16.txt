@@ -1,0 +1,4 @@
+SELECT C.data, R.codice_regione, R.denominazione_regione, C.variazione_totale_positivi
+FROM COVID_REGIONI C, REGIONI R
+WHERE C.codice_regione=R.codice_regione AND C.variazione_totale_positivi<0
+ORDER BY C.data;

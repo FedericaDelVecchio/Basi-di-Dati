@@ -1,0 +1,5 @@
+SELECT R.denominazione_regione, R.numero_aereoporti, C.data, C.casi_totali, C.nuovi_positivi
+FROM COVID_REGIONI C JOIN REGIONI R ON C.codice_regione=R.codice_regione
+WHERE numero_aereoporti=(
+SELECT MAX(R2.numero_aereoporti) FROM REGIONI R2)
+ORDER BY C.data, R.denominazione_regione;

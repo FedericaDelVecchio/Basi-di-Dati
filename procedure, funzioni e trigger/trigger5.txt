@@ -1,0 +1,9 @@
+CREATE OR REPLACE TRIGGER cancella_capoluogo
+AFTER DELETE ON PROVINCE
+FOR EACH ROW
+BEGIN
+if (:old.denominazione_provincia='Aosta' OR :old.denominazione_provincia='Torino' OR :old.denominazione_provincia='Genova' OR :old.denominazione_provincia='Milano' OR 
+:old.denominazione_provincia='Trento' OR :old.denominazione_provincia='Bolzano' OR :old.denominazione_provincia='Venezia' OR :old.denominazione_provincia='Trieste' OR :old.denominazione_provincia='Bologna' OR :old.denominazione_provincia='Firenze' OR :old.denominazione_provincia='Perugia' OR :old.denominazione_provincia='Ancona' OR :old.denominazione_provincia='Roma' OR :old.denominazione_provincia='L’Aquila' OR :old.denominazione_provincia='Campobasso' OR :old.denominazione_provincia='Napoli' OR :old.denominazione_provincia='Bari' OR :old.denominazione_provincia='Potenza' OR :old.denominazione_provincia='Catanzaro' OR :old.denominazione_provincia='Palermo' OR :old.denominazione_provincia='Cagliari') 
+then UPDATE REGIONI SET denominazione_regione=NULL,numero_abitanti=NULL, superficie=NULL,	densita=NULL,	posti_letto_terapia_intensiva=NULL, numero_aereoporti=NULL,	numero_stazioni=NULL,	numero_autostrade=NULL, numero_strade_statali=NULL WHERE codice_regione= :old.codice_regione;
+end if;
+END;

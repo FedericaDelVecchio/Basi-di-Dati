@@ -1,0 +1,13 @@
+CREATE OR REPLACE TRIGGER controllo¬_abitanti
+AFTER INSERT 
+ON COVID_REGIONI
+FOR EACH ROW
+DECLARE
+abitanti REGIONI.numero_abitanti%TYPE;
+positivi_attuali COVID_REGIONI.totale_positivi%TYPE;
+BEGIN
+positivi_attuali := :new.totale_positivi;
+SELECT numero_abitanti into abitanti FROM regioni WHERE codice_regione=:new.codice_regione;
+if positivi_attuali>abitanti then DBMS_OUTPUT.PUT_LINE('ALLARME');
+end if;
+END;

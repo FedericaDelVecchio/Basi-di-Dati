@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION percentuale_aumento_casi_tot
+(regione IN REGIONI.denominazione_regione%TYPE,
+ giorno_oggi IN COVID_REGIONI.data%TYPE
+) RETURN NUMBER
+IS
+BEGIN
+DECLARE
+giorno_ieri COVID_REGIONI.data%TYPE;
+cod_reg COVID_REGIONI.codice_regione%TYPE;
+casi_oggi COVID_REGIONI.casi_totali%TYPE;
+casi_ieri COVID_REGIONI.casi_totali%TYPE;
+percentuale number;
+BEGIN 
+SELECT codice_regione into cod_reg FROM REGIONI WHERE denominazione_regione=regione;
+SELECT DISTINCT data-1 into giorno_ieri FROM COVID_REGIONI WHERE data=giorno_oggi;
+SELECT casi_totali into casi_oggi FROM COVID_REGIONI WHERE data=giorno_oggi AND codice_regione=cod_reg;
+SELECT casi_totali into casi_ieri FROM COVID_REGIONI WHERE data=giorno_ieri AND codice_regione=cod_reg;
+percentuale := 100*(casi_oggi - casi_ieri) / casi_ieri;
+RETURN percentuale;
+END;
+END;

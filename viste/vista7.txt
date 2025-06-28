@@ -1,0 +1,6 @@
+CREATE MATERIALIZED VIEW STATUTO_SPECIALE AS
+SELECT R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_stazioni, R.numero_autostrade, R.numero_strade_statali, COUNT(P.codice_provincia) AS Province_totali,  SUM(P.numero_comuni) AS Comuni_totali, SUM (P.numero_scuole) AS Numero_scuole, SUM (P.numero_ospedali) AS Numero_ospedali
+FROM PROVINCE P JOIN REGIONI R ON R.codice_regione=P.codice_regione
+WHERE R.denominazione_regione='Sicilia' OR R.denominazione_regione='Sardegna' OR R.denominazione_regione='Valle d''Aosta' OR R.denominazione_regione='Friuli Venezia Giulia' OR R.denominazione_regione='P.A. Bolzano' OR R.denominazione_regione='P.A. Trento'
+GROUP BY R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_stazioni, R.numero_autostrade, R.numero_strade_statali
+ORDER BY R.codice_regione;

@@ -1,0 +1,4 @@
+SELECT data, SUM(ricoverati_con_sintomi)*100/SUM(totale_positivi) AS Percentuale_non_gravi, SUM(terapia_intensiva)*100/SUM(totale_positivi) AS Percentuale_in_terapia_intensiva, SUM(isolamento_domiciliare)*100/SUM(totale_positivi) AS Percentuale_a_casa
+FROM COVID_REGIONI 
+GROUP BY data
+ORDER BY data;

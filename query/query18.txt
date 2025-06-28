@@ -1,0 +1,6 @@
+SELECT C.codice_regione, R.denominazione_regione, AVG(C.isolamento_domiciliare) AS Risultato_query
+FROM COVID_REGIONI C, REGIONI R 
+WHERE R.codice_regione=C.codice_regione AND C.data BETWEEN '01-Mar-2020' AND '31-Mar-2020'
+GROUP BY C.codice_regione, R.denominazione_regione
+HAVING (R.denominazione_regione='Sicilia' OR R.denominazione_regione='Sardegna')
+ORDER BY C.codice_regione;

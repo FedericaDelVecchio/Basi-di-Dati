@@ -1,0 +1,5 @@
+CREATE VIEW COVID_ITALIA AS
+SELECT data AS Data, SUM(ricoverati_con_sintomi) AS Ricoverati_con_sintomi_it, SUM(terapia_intensiva) AS Terapia_intensiva_it, SUM(totale_ospedalizzati) AS Totale_ospedalizzati_it, SUM(isolamento_domiciliare) AS Isolamento_domiciliare_it, SUM(variazione_totale_positivi) AS Variazione_totale_positivi_it, SUM(totale_positivi) AS Totale_positivi_it, SUM(casi_totali) AS Casi_totali_it, SUM(nuovi_positivi) AS Nuovi_positivi_it, SUM(dimessi_guariti) AS Dimessi_guariti_it, SUM(deceduti) AS Deceduti_it, SUM(tamponi) AS Tamponi_it, SUM(casi_testati) AS Casi_testati_it
+FROM COVID_REGIONI 
+GROUP BY data 
+ORDER BY data;

@@ -1,0 +1,7 @@
+SELECT C.* 
+FROM COVID_REGIONI C 
+WHERE  2000000 < (
+SELECT R.numero_abitanti  
+FROM REGIONI R  
+WHERE R.codice_regione = C.codice_regione)  
+ORDER BY C.data, C.codice_regione;

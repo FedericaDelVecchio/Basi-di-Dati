@@ -1,0 +1,7 @@
+SELECT P.denominazione_provincia, C.*
+FROM COVID_PROVINCE C JOIN PROVINCE P ON C.codice_provincia=P.codice_provincia
+WHERE P.latitudine IN (SELECT MAX(P1.latitudine) FROM PROVINCE P1)
+OR P.latitudine IN (SELECT MIN(P2.latitudine) FROM PROVINCE P2)
+OR P.longitudine IN (SELECT MAX(P3.longitudine) FROM PROVINCE P3)
+OR P.longitudine IN (SELECT MIN(P4.longitudine) FROM PROVINCE P4)
+ORDER BY C.data;

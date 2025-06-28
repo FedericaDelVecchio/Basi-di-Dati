@@ -1,0 +1,5 @@
+CREATE MATERIALIZED VIEW REGIONI_TOT AS
+SELECT R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_stazioni, R.numero_autostrade, R.numero_strade_statali, COUNT(P.codice_provincia) AS Province_totali,  SUM(P.numero_comuni) AS Comuni_totali, SUM (P.numero_scuole) AS Numero_scuole, SUM (P.numero_ospedali) AS Numero_ospedali
+FROM PROVINCE P JOIN REGIONI R ON R.codice_regione=P.codice_regione
+GROUP BY R.codice_regione, R.denominazione_regione, R.numero_aereoporti, R.numero_stazioni, R.numero_autostrade, R.numero_strade_statali
+ORDER BY R.codice_regione;

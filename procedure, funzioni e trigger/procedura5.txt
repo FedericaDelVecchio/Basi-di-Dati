@@ -1,0 +1,33 @@
+CREATE OR REPLACE PROCEDURE ospedalizzati_procedure
+( giorno1 IN COVID_REGIONI.data%TYPE,
+  giorno2 IN COVID_REGIONI.data%TYPE
+)
+AS
+BEGIN
+DECLARE
+ospedalizzati COVID_REGIONI.totale_ospedalizzati%TYPE;
+regione COVID_REGIONI.codice_regione%TYPE;
+giorno COVID_REGIONI.data%TYPE;
+max_osp COVID_REGIONI.totale_ospedalizzati%TYPE :=0;
+max_regione COVID_REGIONI.codice_regione%TYPE;
+max_giorno COVID_REGIONI.data%TYPE;
+errore EXCEPTION;
+CURSOR cursore IS SELECT data, codice_regione, totale_ospedalizzati 
+FROM COVID_REGIONI WHERE data>=giorno1 AND data<=giorno2;
+BEGIN
+if giorno1<=giorno2 then 
+OPEN cursore;
+LOOP
+FETCH cursore into giorno, regione, ospedalizzati;
+if ospedalizzati>max_osp then 
+max_giorno:=giorno; max_osp:=ospedalizzati; max_regione:=regione;
+end if;
+EXIT WHEN cursore%NOTFOUND;
+END LOOP;
+CLOSE cursore;
+else raise errore; 
+end if;
+DBMS_OUTPUT.PUT_LINE ('Il massimo degli ospedalizzati si ha per il giorno ' || max_giorno || ' nella regione con codice = ' || max_regione || ', e il totale degli ospedalizzati è = ' || max_osp); EXCEPTION
+when errore then DBMS_OUTPUT.PUT_LINE ('I giorni non sono nell''ordine giusto.'); 
+END;
+END;

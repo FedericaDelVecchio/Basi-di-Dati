@@ -1,0 +1,8 @@
+CREATE OR REPLACE TRIGGER modifica_cod_reg
+AFTER UPDATE 
+OF codice_regione ON REGIONI
+FOR EACH ROW
+BEGIN
+UPDATE PROVINCE SET codice_regione = :new.codice_regione WHERE codice_regione=:old.codice_regione;
+UPDATE COVID_REGIONI SET codice_regione = :new.codice_regione WHERE codice_regione=:old.codice_regione;
+END;

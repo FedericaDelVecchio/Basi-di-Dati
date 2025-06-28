@@ -1,0 +1,5 @@
+SELECT data, SUM(totale_positivi) AS Tot_Positivi
+FROM COVID_REGIONI
+GROUP BY data
+HAVING SUM(totale_positivi)>=10000 AND SUM(totale_positivi)<=50000
+ORDER BY data;
